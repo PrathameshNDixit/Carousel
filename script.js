@@ -9,6 +9,7 @@ const images = [
 const flexContainer = document.getElementById("flex-container");
 const leftBtn = document.getElementById("left-btn");
 const rightBtn = document.getElementById("right-btn");
+const carouselNav = document.getElementById("carousel-nav");
 const containerWIdth = 80;
 const flexContainerWidth = images.length * containerWIdth;
 flexContainer.style.width = flexContainerWidth;
@@ -18,28 +19,35 @@ for (let i = 0; i < images.length; i++) {
     newImg.src = images[i];
     newImg.classList.add("img-style");
     flexContainer.appendChild(newImg);
+
+    const dot = document.createElement("div");
+    dot.classList.add("dots");
+    carouselNav.appendChild(dot);
+    dot.addEventListener("click", (event) => {
+        let index = [...carouselNav.children].indexOf(event.target);
+        showImg(index);
+    });
 }
 let currentCount = 0;
 leftBtn.addEventListener("click", (event) => {
     if (currentCount > 0) {
-        currentCount--;
-        showImg();
+        showImg(currentCount - 1);
     } else {
-        currentCount = images.length - 1;
+        showImg(images.length - 1);
     }
 });
 rightBtn.addEventListener("click", (event) => {
     if (currentCount < images.length - 1) {
-        currentCount++;
-        if (currentCount == images.length - 1) {
-            currentCount = 0;
-        }
-        showImg();
-    }else{
-        currentCount=0;
+        showImg(currentCount + 1);
+    } else {
+        showImg(0);
     }
 });
-function showImg() {
+function showImg(position) {
+    carouselNav.children[currentCount].classList.remove("active");
+    currentCount = position;
+    carouselNav.children[currentCount].classList.add('active');
     let distance = -currentCount * containerWIdth;
+    console.log(distance);
     flexContainer.style.transform = `translateX(${distance}vw)`;
 }
