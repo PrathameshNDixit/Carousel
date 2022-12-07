@@ -76,6 +76,7 @@
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.692);
     cursor: pointer;
+    transition:0.5s;
 }
 .dots.active{
     background-color: rgba(0, 0, 0, 0.384);
